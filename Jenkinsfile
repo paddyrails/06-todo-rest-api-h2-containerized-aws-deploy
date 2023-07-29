@@ -11,8 +11,8 @@ pipeline {
       string(defaultValue: "1.0.0.$BUILD_NUMBER", description: "Release Version", name: "releaseVersion")
       string(defaultValue: "todo-rest-api-h2", description: "Release ArtifactId", name: "releaseArtifactId")
       string(defaultValue: "Todo-rest-api-docker-$BUILD_NUMBER", description: "New Version to be deployed", name: "versionLabel")
-      string(defaultValue: "todo-rest-api", description: "Application Name", name: "applicationName")
-      string(defaultValue: "todo-rest-api-template-$BUILD_NUMBER", description: "Temlate Name", name: "templateName")
+      string(defaultValue: "Todo-rest-api-docker", description: "Application Name", name: "applicationName")
+      string(defaultValue: "Todo-rest-api-docker-template-$BUILD_NUMBER", description: "Temlate Name", name: "templateName")
       string(defaultValue: "Todo-rest-api-docker-dev", description: "Env Name", name: "environmentName")
       string(defaultValue: "e-ugrdmgk2nm", description: "Current Env id", name: "environmentId")
       string(defaultValue: "Todo-rest-api-docker-$BUILD_NUMBER-blue", description: "New Blue Env Name", name: "blueEnvironmentName")
@@ -46,7 +46,7 @@ pipeline {
                 // upload updated Dockerrun.aws.json
                 s3Upload(file:"Dockerrun.aws.json", 
                 bucket:"popsy-bucket", 
-                path:"Todo-rest-api-docker/$BUILD_NUMBER/Dockerrun.aws.json")
+                path:"${params.applicationName}/$BUILD_NUMBER/Dockerrun.aws.json")
             }            
         }
         stage('Deliver') {
@@ -56,7 +56,7 @@ pipeline {
                     applicationName: "${params.applicationName}",
                     versionLabel: "${params.versionLabel}",
                     s3Bucket: "popsy-bucket",
-                    s3Key: "Todo-rest-api-docker/$BUILD_NUMBER/Dockerrun.aws.json",
+                    s3Key: "${params.applicationName}/$BUILD_NUMBER/Dockerrun.aws.json",
                     description: "New version"
                 )
                 // Create configuration template based on existing environment
