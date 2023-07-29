@@ -5,8 +5,8 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.in28minutes.rest.webservices</groupId>
-	<artifactId>todo-rest-api-h2</artifactId>
-	<version>1.0.0.RELEASE</version>
+	<artifactId>${release.artifactId}</artifactId>
+	<version>${release.version}</version>
 	<packaging>jar</packaging>
 	<name>06-todo-rest-api-h2-containerized</name>
 
@@ -99,7 +99,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<repository>in28min/${project.artifactId}</repository>
+					<repository>paddypillai/${project.artifactId}</repository>
 					<tag>${project.version}</tag>
 					<skipDockerInfo>true</skipDockerInfo>
 				</configuration>
