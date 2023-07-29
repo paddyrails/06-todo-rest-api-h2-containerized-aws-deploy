@@ -75,7 +75,7 @@ pipeline {
                 )
                 // Swap CNAMEs using the environment names
                 ebSwapEnvironmentCNAMEs(
-                    environmentName: "${params.blueEnvironmentName}",
+                    sourceEnvironmentName: "${params.blueEnvironmentName}",
                     destinationEnvironmentName: "${params.environmentName}",
                 )
             }
