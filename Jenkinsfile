@@ -29,7 +29,12 @@ pipeline {
                 echo "Test"
             }            
         }
-        stage('Upload artifact to s3') {
+        stage('Login') {
+          steps {
+            sh 'echo $DOCKER_HUB_CREDENTIALS_PSW | docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin'
+          }
+        }
+        stage('Push Docker image and Upload artifact to s3') {         
             steps {
                 sh "docker push paddypillai/${params.releaseArtifactId}:${params.releaseVersion}"
                 script {
@@ -85,5 +90,10 @@ pipeline {
                 echo 'Job Complete!'
             }
         }
+    }
+    post {
+      always {
+        sh 'docker logout'
+      }
     }
 }
