@@ -32,9 +32,11 @@ pipeline {
         stage('Upload artifact to s3') {
             steps {
                 sh "docker push paddypillai/${params.releaseArtifactId}:${params.releaseVersion}"
-                jsonfile = readJSON file: 'Dockerrun.aws.json', returnPojo: true
-                jsonfile['Image.Name'] = "paddypillai/${params.releaseArtifactId}:${params.releaseVersion}"
-                writeJSON file: 'Dockerrun.aws.json', json: jsonfile
+                script {
+                  jsonfile = readJSON file: 'Dockerrun.aws.json', returnPojo: true
+                  jsonfile['Image.Name'] = "paddypillai/${params.releaseArtifactId}:${params.releaseVersion}"
+                  writeJSON file: 'Dockerrun.aws.json', json: jsonfile
+                }
                 // upload updated Dockerrun.aws.json
                 s3Upload(file:"Dockerrun.aws.json", 
                 bucket:"popsy-bucket", 
