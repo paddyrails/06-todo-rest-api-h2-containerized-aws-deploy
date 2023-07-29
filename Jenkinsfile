@@ -40,7 +40,7 @@ pipeline {
                 sh "docker push paddypillai/${params.releaseArtifactId}:${params.releaseVersion}"
                 script {
                   jsonfile = readJSON file: 'Dockerrun.aws.json', returnPojo: true
-                  jsonfile['Image.Name'] = "paddypillai/${params.releaseArtifactId}:${params.releaseVersion}"
+                  jsonfile['Image']['Name'] = "paddypillai/${params.releaseArtifactId}:${params.releaseVersion}"
                   writeJSON file: 'Dockerrun.aws.json', json: jsonfile
                 }
                 // upload updated Dockerrun.aws.json
