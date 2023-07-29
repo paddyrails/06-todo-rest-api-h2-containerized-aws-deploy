@@ -5,6 +5,7 @@ pipeline {
     }
     environment {
         PATH="/usr/local/bin:$PATH"
+        DOCKER_HUB_CREDENTIALS= credentials('DOCKER_HUB_CREDENTIALS')     
     }
     parameters {
       string(defaultValue: "1.0.0.$BUILD_NUMBER", description: "Release Version", name: "releaseVersion")
@@ -31,7 +32,7 @@ pipeline {
         }
         stage('Login') {
           steps {
-            sh 'echo $DOCKER_HUB_CREDENTIALS_PSW | docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin'
+            sh "docker login -u $DOCKER_HUB_CREDENTIALS_USR -p $DOCKER_HUB_CREDENTIALS_PSW"
           }
         }
         stage('Push Docker image and Upload artifact to s3') {         
